@@ -1,0 +1,5 @@
+backend/accounts/__pycache__/
+backend/accounts/migrations/
+backend/medicare/__pycache__/
+.env
+.venv/
