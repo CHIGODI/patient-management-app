@@ -38,7 +38,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'corsheaders',
     'accounts',
-    'djano-rest-framework',
     'rest_framework_simplejwt',
     'rest_framework',
     'django.contrib.admin',
@@ -148,8 +147,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
+# settings for the api documentation(DRF Spectacular)
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'myBiz',
+    'DESCRIPTION': 'A web application that aims to make a business flow easy!',
+    'VERSION': '1.0.0'
+}
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
