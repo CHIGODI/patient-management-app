@@ -45,7 +45,7 @@ class CustomUser(AbstractUser):
     """
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(_("email address"), unique=True)
-    phone = models.CharField(max_length=15, unique=True)
+    phone = models.CharField(max_length=15, unique=True, blank=False)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
@@ -60,7 +60,8 @@ class CustomUser(AbstractUser):
     def __str__(self):
         """
         Returns:
-            str: A string that represents the user, including the username and email.
+            str: A string that represents the user,
+            including the username and email.
         """
         return 'This is user {} with email {}'.format(self.username,
                                                       self.email)

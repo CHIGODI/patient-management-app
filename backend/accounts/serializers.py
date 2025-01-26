@@ -14,11 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'password',
-                  'date_joined', 'id',
+                  'date_joined', 'id', 'phone', 'is_active',
                   'is_staff')
 
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'phone': {'required': True},
         }
 
     # overide default serializer create_user to hash password
