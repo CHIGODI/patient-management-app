@@ -19,7 +19,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         extra_kwargs = {
             'password': {'write_only': True},
-            'phone': {'required': True},
         }
 
     # overide default serializer create_user to hash password

@@ -43,13 +43,13 @@ class CustomUser(AbstractUser):
     """
     Custom user model.
     """
-    username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(_("email address"), unique=True)
+    username = models.CharField(max_length=150, unique=True, blank=False)
+    email = models.EmailField(_("email address"), unique=True, blank=False)
     phone = models.CharField(max_length=15, unique=True, blank=False)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['usernam']
+    REQUIRED_FIELDS = ['username', 'phone']
 
     class Meta:
         """Meta class for the user model"""
