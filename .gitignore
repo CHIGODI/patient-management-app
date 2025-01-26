@@ -3,3 +3,7 @@ backend/accounts/migrations/
 backend/medicare/__pycache__/
 .env
 .venv/
+
+
+frontend/node_modules/
+frontend/package-lock.json
