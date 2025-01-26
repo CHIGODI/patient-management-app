@@ -37,6 +37,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'corsheaders',
+    'drf_spectacular',
     'accounts',
     'rest_framework_simplejwt',
     'rest_framework',
@@ -152,8 +153,8 @@ REST_FRAMEWORK = {
 
 # settings for the api documentation(DRF Spectacular)
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'myBiz',
-    'DESCRIPTION': 'A web application that aims to make a business flow easy!',
+    'TITLE': 'medicare',
+    'DESCRIPTION': 'A web application to manage patients signin!',
     'VERSION': '1.0.0'
 }
 
