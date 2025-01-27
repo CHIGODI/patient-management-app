@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState({});
+    const [ login, setLogin ] = useState('Login');
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -40,8 +41,8 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let errors = {};
+        setLogin('Logging in...');
 
-        // Check for required fields
         Object.keys(formData).forEach(key => {
             if (!formData[key]) {
                 errors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
@@ -50,6 +51,7 @@ const Login = () => {
 
         if (Object.keys(errors).length > 0) {
             setError(errors);
+            setLogin('Login');
             return;
         }
 
@@ -58,13 +60,16 @@ const Login = () => {
             if (response.status === 200) {
                 dispatch(setUser({ user: response.data.user, access: response.data.access, refresh: response.data.refresh }));
                 toast.success("logged in successfully");
+                setLogin('Login');
                 navigate('/dashboard');
             }
         } catch (error) {
-            if (error.response.data.detail) {
-                setError(error.response.data);
-            }
+            if (error.response.data) {
             toast.error(error.response.data.detail);
+            } else{
+                toast.error("An error occurred. Please try again later.");
+            }
+            setLogin('Login');
         }
     };
 
@@ -103,10 +108,10 @@ const Login = () => {
                     ))}
                     <div className="flex items-center justify-between">
                         <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
-                            Login
+                            {login}
                         </button>
                     </div>
                 </form>
