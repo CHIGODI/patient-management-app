@@ -5,6 +5,8 @@ import { setUser } from '../redux/userSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -55,11 +57,14 @@ const Login = () => {
             const response = await axios.post("http://127.0.0.1:8000/api/v1/account/login/", formData);
             if (response.status === 200) {
                 dispatch(setUser({ user: response.data.user, access: response.data.access, refresh: response.data.refresh }));
-                console.log("User logged in successfully");
+                toast.success("logged in successfully");
                 navigate('/dashboard');
             }
         } catch (error) {
-            console.log(error);
+            if (error.response.data.detail) {
+                setError(error.response.data);
+            }
+            toast.error(error.response.data.detail);
         }
     };
 

@@ -4,18 +4,23 @@ import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './pages/components/PrivateRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-
-        {/* Public routes */}
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
+    <div>
+      <ToastContainer />
+      <Router>
+        <Routes>
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          
+          {/* Public routes */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
