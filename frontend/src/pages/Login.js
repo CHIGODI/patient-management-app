@@ -99,7 +99,7 @@ const Login = () => {
                                         className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                                         onClick={handleTogglePassword}
                                     >
-                                        <FontAwesomeIcon className='text-gray-600 text-xs' icon={showPassword ? faEyeSlash : faEye} />
+                                        <FontAwesomeIcon className='text-gray-600 text-xs' icon={showPassword ? faEye : faEyeSlash} />
                                     </span>
                                 )}
                             </div>
@@ -108,7 +108,7 @@ const Login = () => {
                     ))}
                     <div className="flex items-center justify-between">
                         <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            className="bg-blue-500 hover:bg-blue-700 text-white py-3 px-8 rounded focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
                             {login}

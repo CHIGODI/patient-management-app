@@ -24,7 +24,7 @@ const NavBar = () => {
                 <h1 className="text-gray-600 text-sm font-bold ">{user.email}</h1>
                 <p className="text-xs ">{user.username}</p>
             </div>
-            <button onClick={handleLogout} className='bg-gray-600 rounded px-4 py-1 hover:bg-gray-700 hidden'>
+            <button onClick={handleLogout} className='bg-gray-600 rounded px-4 py-2 hover:bg-gray-700 hidden lg:flex items-center'>
                 <FontAwesomeIcon className='text-xs text-white' icon={faArrowRightFromBracket} />
             </button>
         </div >
