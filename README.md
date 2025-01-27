@@ -81,9 +81,32 @@ Install the necessary Node.js dependencies:
 npm install
 ```
 
+#### c. Build your react app
+```bash
+npm run build
+```
+
 Running the Full Application
 ```bash
 cd ../backend
+```
+#### a. Create a templates directory in backend directory
+```bash
+mkdir templates
+```
+
+#### b. copy index.html file from build generated from react build into templates
+```bash
+cp ../frontend/build/templates .
+```
+- run
+```bash
 python manage.py collectstatic
+```
+Finally
+```bash
 python3 manage.py runserver
 ```
+
+your app will be running on
+http://localhost:8000

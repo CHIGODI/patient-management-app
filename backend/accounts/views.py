@@ -2,7 +2,7 @@
 API CBV endpoints for user registration,
 login, logout, and users listing
 """
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserUpdateSerializer
 from rest_framework import generics, status
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
@@ -10,6 +10,10 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny,  IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import MyTokenObtainPairSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 
 CustomUser = get_user_model()
@@ -63,10 +67,17 @@ class LogoutView(generics.GenericAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserList(generics.ListCreateAPIView):
+class UserUpdateView(APIView):
     """
-    GET list all system users
-    Endpoint: /api/v1/account/users/
+    PUT a user's details (update)
+    Endpoint: /api/v1/account/update/<int:id>/
     """
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, id):
+        user = get_object_or_404(CustomUser, id=id)
+        serializer = UserUpdateSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

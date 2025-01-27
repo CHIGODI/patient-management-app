@@ -7,9 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from "react-toastify";
 
 const Dashboard = () => {
-    const { user } = useSelector((state) => state.user);
+    const { user, access } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
         username: user.username,
+        email: user.email,
+        password: user.password,
         firstName: user.firstName,
         lastName: user.lastName,
         phone : user.phone,
@@ -18,40 +20,31 @@ const Dashboard = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'email') {
-            toast.error("You cannot edit this field");
-            return;
-        }
         setFormData({
             ...formData,
             [name]: value
         });
-
-        if (error[name]) {
-            setError({
-                ...error,
-                [name]: ""
-            });
-        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let errors = {};
+        const isUnchanged = Object.keys(formData).every(
+            (key) => formData[key] === user[key]
+        );
 
-        Object.keys(formData).forEach(key => {
-            if (!formData[key]) {
-                errors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
-            }
-        });
-
-        if (Object.keys(errors).length > 0) {
-            setError(errors);
+        if (isUnchanged) {
+            toast.info("No changes detected.");
             return;
         }
-
         try {
-            const response = await axios.put(`http://127.0.0.1:8000/api/v1/account/update/${user.id}`, formData);
+            const response = await axios.put(`http://127.0.0.1:8000/api/v1/account/update/${user.id}/`,
+            formData,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${access}`,
+                    }
+                }
+            );
             if (response.status === 200) {
                 toast.success("User details updated successfully");
             }
@@ -91,7 +84,6 @@ const Dashboard = () => {
                                     onChange={handleChange}
                                     className="border px-4 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none text-sm"
                                 />
-                                {error.username && <p className="text-red-500 text-xs italic">{error.username}</p>}
                             </div>
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-gray-600">Phone</label>
@@ -102,7 +94,6 @@ const Dashboard = () => {
                                     onChange={handleChange}
                                     className="border px-4 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none text-sm"
                                 />
-                                {error.lastName && <p className="text-red-500 text-xs italic">{error.lastName}</p>}
                             </div>
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-gray-600">First Name</label>
@@ -113,7 +104,6 @@ const Dashboard = () => {
                                     onChange={handleChange}
                                     className="border px-4 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none text-sm"
                                 />
-                                {error.firstName && <p className="text-red-500 text-xs italic">{error.firstName}</p>}
                             </div>
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-medium text-gray-600">Last Name</label>
@@ -124,7 +114,6 @@ const Dashboard = () => {
                                     onChange={handleChange}
                                     className="border px-4 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none text-sm"
                                 />
-                                {error.lastName && <p className="text-red-500 text-xs italic">{error.lastName}</p>}
                             </div>
                         </div>
                         <button
