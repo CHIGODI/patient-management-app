@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const SignUp = () => {
     const [error, setError] = useState({});
@@ -10,6 +12,10 @@ const SignUp = () => {
         password: "",
         confirmPassword: ""
     });
+    const [showPassword, setShowPassword] = useState({
+        password: false,
+        confirmPassword: false
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,7 +24,6 @@ const SignUp = () => {
             [name]: value
         });
 
-        // Clear the error for the specific field being updated
         if (error[name]) {
             setError({
                 ...error,
@@ -27,11 +32,17 @@ const SignUp = () => {
         }
     };
 
+    const handleTogglePassword = (field) => {
+        setShowPassword({
+            ...showPassword,
+            [field]: !showPassword[field]
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         let errors = {};
 
-        // Check for required fields
         Object.keys(formData).forEach(key => {
             if (!formData[key]) {
                 errors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
@@ -67,7 +78,7 @@ const SignUp = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-blue-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Create Account</h2>
+                <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Sign Up</h2>
                 <form onSubmit={handleSubmit}>
                     {['username', 'email', 'phone', 'password', 'confirmPassword'].map((field) => (
                         <div className="mb-4" key={field}>
@@ -75,15 +86,25 @@ const SignUp = () => {
                                 {field.charAt(0).toUpperCase() + field.slice(1)}
                                 <span className="text-red-500">*</span>
                             </label>
-                            <input
-                                className="appearance-none border w-full py-4 px-3 text-gray-600 text-sm leading-tight focus:outline-none focus:shadow-outline"
-                                id={field}
-                                name={field}
-                                type={field === 'password' || field === 'confirmPassword' ? 'password' : 'text'}
-                                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                                value={formData[field]}
-                                onChange={handleChange}
-                            />
+                            <div className="relative">
+                                <input
+                                    className="appearance-none border w-full py-4 px-3 text-gray-600 text-sm leading-tight focus:outline-none focus:shadow-outline"
+                                    id={field}
+                                    name={field}
+                                    type={showPassword[field] ? 'text' : 'password'}
+                                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                                    value={formData[field]}
+                                    onChange={handleChange}
+                                />
+                                {(field === 'password' || field === 'confirmPassword') && (
+                                    <span
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                                        onClick={() => handleTogglePassword(field)}
+                                    >
+                                        <FontAwesomeIcon className='text-gray-600 text-xs' icon={showPassword[field] ? faEye : faEyeSlash} />
+                                    </span>
+                                )}
+                            </div>
                             {error[field] && <p className="text-red-500 text-xs italic">{error[field]}</p>}
                         </div>
                     ))}
