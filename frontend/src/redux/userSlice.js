@@ -1,11 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+
+export const refreshAccessToken = createAsyncThunk(
+    "user/refreshAccessToken",
+    async (refreshToken, { rejectWithValue }) => {
+        try {
+            const response = await axios.post("http://127.0.0.1:8000/api/v1/token/refresh/", { refresh: refreshToken });
+            return response.data.access;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Failed to refresh token");
+        }
+    }
+)
 
 const initialState = {
     user: null,
     access: null,
     refresh: null,
-    isAuthenticated: false,
-    justLoggedOut: false,
 };
 
 const userSlice = createSlice({
@@ -16,21 +28,14 @@ const userSlice = createSlice({
             state.user = action.payload.user;
             state.access = action.payload.access;
             state.refresh = action.payload.refresh;
-            state.isAuthenticated = true;
-            state.justLoggedOut = false;
         },
         clearUser: (state) => {
             state.user = null;
             state.access = null;
             state.refresh = null;
-            state.isAuthenticated = false;
-            state.justLoggedOut = true;
         },
-        resetLogout: (state) =>{
-            state.justLoggedOut =  false;
-        }
     },
 });
 
-export const { setUser, clearUser, resetLogout } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;
