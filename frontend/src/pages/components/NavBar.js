@@ -20,11 +20,13 @@ const NavBar = () => {
 
     return (
         < div className = "h-[70px] border-b w-full flex justify-end items-center pr-[5%]" >
-            <div className="h-[70%] flex flex-col justify-center px-4 w-[15%]">
-                <h1 className="text-blue-600 text-sm font-bold">{user.email}</h1>
-                <p className="text-xs">{user.username}</p>
+            <div className="h-[70%] flex flex-col justify-center  items-end lg:items-start lg:px-4 w-[50%] lg:w-[15%]">
+                <h1 className="text-gray-600 text-sm font-bold ">{user.email}</h1>
+                <p className="text-xs ">{user.username}</p>
             </div>
-            <FontAwesomeIcon onClick={handleLogout} className='text-xs text-gray-600' icon={faArrowRightFromBracket} />
+            <button onClick={handleLogout} className='bg-gray-600 rounded px-4 py-1 hover:bg-gray-700 hidden'>
+                <FontAwesomeIcon className='text-xs text-white' icon={faArrowRightFromBracket} />
+            </button>
         </div >
     );
 };
