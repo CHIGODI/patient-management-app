@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/v1/docs/', SpectacularSwaggerView.as_view(url_name='schema'),
          name='docs'),
     path('', TemplateView.as_view(template_name='index.html')),
+    re_path(r"^(?!api/).*", TemplateView.as_view(template_name='index.html'), name="react-app"),
 ]
