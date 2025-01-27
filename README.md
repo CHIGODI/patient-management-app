@@ -3,7 +3,7 @@
 This is a web application designed to manage patient sign-ins and related operations. The project consists of both a backend (Django) and frontend (React) application.
 
 ## Instructions to Run the App
-- Make sure you have node v.20 and python3 installed
+- Make sure you have node and python3 installed
 
 ### 1. Clone the Repository
 
@@ -57,7 +57,7 @@ pip install -r requirements.txt
 
 #### e. Set Up the Database
 ```bash
-psql -U postgres -d your_db_name -f set_postgresdb.sql
+sudo -u postgres psql -d replace_with_your_db_name -f set_postgresdb.sql
 ```
 
 After setting up your database, run the Django migrations:
@@ -83,6 +83,7 @@ npm install
 
 Running the Full Application
 ```bash
-cd backend
+cd ../backend
+python manage.py collectstatic
 python3 manage.py runserver
 ```
