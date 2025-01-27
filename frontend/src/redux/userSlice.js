@@ -35,6 +35,11 @@ const userSlice = createSlice({
             state.refresh = null;
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase(refreshAccessToken.fulfilled, (state, action) => {
+            state.access = action.payload;
+        });
+    },
 });
 
 export const { setUser, clearUser } = userSlice.actions;
