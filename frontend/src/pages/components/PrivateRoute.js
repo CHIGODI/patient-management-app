@@ -12,8 +12,7 @@ const PrivateRoute = ({ children }) => {
         try {
             const { exp } = jwtDecode(token);
             const currentTime = Math.floor(Date.now() / 1000);
-            const expTime = exp < currentTime;
-            return expTime;
+            return exp > currentTime;
         } catch (error) {
             return false;
         }
@@ -25,7 +24,7 @@ const PrivateRoute = ({ children }) => {
                 return;
             }
 
-            if (refresh && !isTokenValid(refresh)) {
+            if (!isTokenValid(refresh)) {
                 try {
                     await dispatch(refreshAccessToken(refresh)).unwrap();
                 } catch (error) {

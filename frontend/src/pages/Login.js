@@ -64,8 +64,8 @@ const Login = () => {
                 navigate('/dashboard');
             }
         } catch (error) {
-            if (error.response.data) {
-            toast.error(error.response.data.detail);
+            if (error.response.data.detail) {
+                toast.error(error.response.data.detail);
             } else{
                 toast.error("An error occurred. Please try again later.");
             }
