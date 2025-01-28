@@ -95,7 +95,7 @@ const SignUp = () => {
                                     className="appearance-none border w-full py-4 px-3 text-gray-600 text-sm leading-tight focus:outline-none focus:shadow-outline"
                                     id={field}
                                     name={field}
-                                    type={showPassword[field] ? 'password' : 'text'}
+                                    type={(field === 'password' || field === 'confirmPassword') && showPassword[field] ? 'text' : 'password'}
                                     placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                                     value={formData[field]}
                                     onChange={handleChange}
@@ -105,7 +105,11 @@ const SignUp = () => {
                                         className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                                         onClick={() => handleTogglePassword(field)}
                                     >
-                                        <FontAwesomeIcon className='text-gray-600 text-xs' icon={showPassword[field] ? faEyeSlash : faEye} />
+                                        <FontAwesomeIcon
+                                            className='text-gray-600 text-xs'
+                                            icon={showPassword[field] ? faEye : faEyeSlash}
+                                        />
+
                                     </span>
                                 )}
                             </div>

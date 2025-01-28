@@ -4,7 +4,7 @@ backend/medicare/__pycache__/
 .env
 .venv/
 backend/staticfiles/
-backend/templates/
+backend/templates/index.html
 
 
 

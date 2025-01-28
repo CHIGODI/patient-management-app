@@ -35,6 +35,11 @@ const Dashboard = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.username === user.username && formData.phone === user.phone) {
+            toast.info("No changes made");
+            setActiveTab("My Details");
+            return;
+        }
         let errors = {};
 
         Object.keys(formData).forEach(key => {
