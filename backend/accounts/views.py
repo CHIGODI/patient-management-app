@@ -66,6 +66,16 @@ class LogoutView(generics.GenericAPIView):
             return Response({"detail": str(e)},
                             status=status.HTTP_400_BAD_REQUEST)
 
+class GetUserByEmailView(APIView):
+    """
+    GET user by their email
+    Endpoint: /api/v1/account/user/
+    """
+    def get(self, request, email):
+        user = get_object_or_404(CustomUser, email=email)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class UserUpdateView(APIView):
     """
@@ -76,6 +86,7 @@ class UserUpdateView(APIView):
 
     def put(self, request, id):
         user = get_object_or_404(CustomUser, id=id)
+        print(user)
         serializer = UserUpdateSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()

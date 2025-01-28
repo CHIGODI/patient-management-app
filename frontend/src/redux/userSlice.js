@@ -6,7 +6,7 @@ export const refreshAccessToken = createAsyncThunk(
     "user/refreshAccessToken",
     async (refreshToken, { rejectWithValue }) => {
         try {
-            const response = await axios.post("http://127.0.0.1:8000/api/v1/token/refresh/", { refresh: refreshToken });
+            const response = await axios.post("http://127.0.0.1:8000/api/token/refresh/", { refresh: refreshToken });
             return response.data.access;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Failed to refresh token");

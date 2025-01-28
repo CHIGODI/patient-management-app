@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/account/', include('accounts.urls')),
+     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/v1/docs/', SpectacularSwaggerView.as_view(url_name='schema'),
          name='docs'),

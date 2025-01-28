@@ -25,7 +25,8 @@ const PrivateRoute = ({ children }) => {
 
             if (refresh && isTokenValid(refresh)) {
                 try {
-                    await dispatch(refreshAccessToken(refresh)).unwrap();
+                    const res = await dispatch(refreshAccessToken(refresh)).unwrap();
+                    console.log(res);
                 } catch (error) {
                     dispatch(clearUser());
                 }

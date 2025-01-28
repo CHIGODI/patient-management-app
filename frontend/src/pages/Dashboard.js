@@ -9,12 +9,12 @@ import { toast } from "react-toastify";
 const Dashboard = () => {
     const { user, access } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
-        username: user.username,
-        email: user.email,
-        password: user.password,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phone : user.phone,
+        username: user?.username || "",
+        email: user?.email || "",
+        password: user?.password || "",
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        phone: user?.phone || "",
     });
     const [error, setError] = useState({});
 
@@ -50,7 +50,8 @@ const Dashboard = () => {
             }
         } catch (error) {
             if (error.response.data) {
-            setError(error.response.data);
+                setError(error.response.data);
+                console.log(error.response);
             } else {
                 toast.error("An error occurred. Please try again.");
             }

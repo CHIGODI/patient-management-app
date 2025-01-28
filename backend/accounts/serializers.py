@@ -3,7 +3,6 @@ Serializers for the User model
 """
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from rest_framework.serializers import ModelSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -14,9 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
     """Serializer for the User model"""
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'password',
-                  'date_joined', 'id', 'phone', 'is_active', 'first_name',
-                  'last_name', 'is_staff')
+        fields = ('username', 'email', 'password', 'username',
+                  'date_joined', 'id', 'phone', 'is_active',
+                  'first_name', 'last_name', 'is_staff')
 
         extra_kwargs = {
             'password': {'write_only': True},
@@ -29,10 +28,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-class UserUpdateSerializer(ModelSerializer):
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    """User can only edit these fields"""
     class Meta:
         model = CustomUser
-        fields = ['username', 'phone', 'first_name', 'last_name']
+        fields = ['username', 'phone', 'first_name', 'last_name', 'password']
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
