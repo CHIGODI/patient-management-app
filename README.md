@@ -56,6 +56,13 @@ pip install -r requirements.txt
 ```
 
 #### e. Set Up the Database
+
+- install PostgreSQL database
+```bash
+sudo apt install postgresql postgresql-contrib
+
+```
+- run setup database file
 ```bash
 sudo -u postgres psql -d replace_with_your_db_name -f set_postgresdb.sql
 ```
