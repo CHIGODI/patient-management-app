@@ -77,6 +77,7 @@ const Login = () => {
         <div className="min-h-screen flex items-center justify-center bg-blue-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Welcome Back!</h2>
+                <p className="font-bold text-center text-blue-500 mb-6">Login</p>
                 <form onSubmit={handleSubmit}>
                     {['email', 'password'].map((field) => (
                         <div className="mb-4" key={field}>
@@ -118,9 +119,6 @@ const Login = () => {
                 <div className="mt-4 text-center">
                     <p className="text-gray-600 text-sm">
                         Don't have an account? <Link to="/signup" className="text-blue-500 hover:text-blue-700">Create an account</Link>
-                    </p>
-                    <p className="text-gray-600 text-sm mt-2">
-                        <Link to="/forgot-password" className="text-blue-500 hover:text-blue-700">Forgot password?</Link>
                     </p>
                 </div>
             </div>

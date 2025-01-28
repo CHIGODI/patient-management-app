@@ -86,9 +86,11 @@ class UserUpdateView(APIView):
 
     def put(self, request, id):
         user = get_object_or_404(CustomUser, id=id)
-        print(user)
-        serializer = UserUpdateSerializer(user, data=request.data, partial=True)
+        data = request.data
+        data['password'] = user.password
+        serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            updated_user = serializer.save()
+            updated_user_serializer = UserSerializer(updated_user)
+            return Response(updated_user_serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

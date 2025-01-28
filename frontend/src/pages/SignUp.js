@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 
 const SignUp = () => {
+    const navigate = useNavigate()
     const [error, setError] = useState({});
     const [formData, setFormData] = useState({
         username: "",
@@ -69,10 +71,10 @@ const SignUp = () => {
         try {
             const response = await axios.post("http://127.0.0.1:8000/api/v1/account/register/", formData);
             if (response.status === 201) {
-                console.log("User registered successfully");
+                toast.success("User registered successfully");
+                navigate('/')
             }
         } catch (error) {
-            console.log(error.response.data);
             setError(error.response.data);
         }
     };
@@ -93,7 +95,7 @@ const SignUp = () => {
                                     className="appearance-none border w-full py-4 px-3 text-gray-600 text-sm leading-tight focus:outline-none focus:shadow-outline"
                                     id={field}
                                     name={field}
-                                    type={showPassword[field] ? 'text' : 'password'}
+                                    type={showPassword[field] ? 'password' : 'text'}
                                     placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                                     value={formData[field]}
                                     onChange={handleChange}
@@ -103,7 +105,7 @@ const SignUp = () => {
                                         className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                                         onClick={() => handleTogglePassword(field)}
                                     >
-                                        <FontAwesomeIcon className='text-gray-600 text-xs' icon={showPassword[field] ? faEye : faEyeSlash} />
+                                        <FontAwesomeIcon className='text-gray-600 text-xs' icon={showPassword[field] ? faEyeSlash : faEye} />
                                     </span>
                                 )}
                             </div>

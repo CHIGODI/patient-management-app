@@ -11,7 +11,9 @@ const PrivateRoute = ({ children }) => {
     const isTokenValid = (token) => {
         try {
             const { exp } = jwtDecode(token);
-            return Date.now() < exp * 1000;
+            const currentTime = Math.floor(Date.now() / 1000);
+            const expTime = exp < currentTime;
+            return expTime;
         } catch (error) {
             return false;
         }
@@ -23,10 +25,9 @@ const PrivateRoute = ({ children }) => {
                 return;
             }
 
-            if (refresh && isTokenValid(refresh)) {
+            if (refresh && !isTokenValid(refresh)) {
                 try {
-                    const res = await dispatch(refreshAccessToken(refresh)).unwrap();
-                    console.log(res);
+                    await dispatch(refreshAccessToken(refresh)).unwrap();
                 } catch (error) {
                     dispatch(clearUser());
                 }
