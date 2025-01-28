@@ -17,8 +17,8 @@ const SignUp = () => {
         confirmPassword: ""
     });
     const [showPassword, setShowPassword] = useState({
-        password: false,
-        confirmPassword: false
+        password: true,
+        confirmPassword: true,
     });
 
     const handleChange = (e) => {
@@ -95,8 +95,7 @@ const SignUp = () => {
                                     className="appearance-none border w-full py-4 px-3 text-gray-600 text-sm leading-tight focus:outline-none focus:shadow-outline"
                                     id={field}
                                     name={field}
-                                    type={(field === 'password' || field === 'confirmPassword') && showPassword[field] ? 'text' : 'password'}
-                                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                                    type={showPassword[field] ? 'password' : 'text'}placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                                     value={formData[field]}
                                     onChange={handleChange}
                                 />
@@ -107,7 +106,7 @@ const SignUp = () => {
                                     >
                                         <FontAwesomeIcon
                                             className='text-gray-600 text-xs'
-                                            icon={showPassword[field] ? faEye : faEyeSlash}
+                                            icon={!showPassword[field] ? faEye : faEyeSlash}
                                         />
 
                                     </span>
